@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivitySimEssentials">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40sp"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_info"
+        android:drawableLeft="@drawable/ic_siminfo"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/button_siminfo"
+        android:onClick="viewSimInfo"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_balance"
+        android:drawableLeft="@drawable/ic_balance"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/button_balance"
+        android:onClick="viewSimBalance"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_ownnumber"
+        android:drawableLeft="@drawable/ic_ownnumber"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/button_ownnumber"
+        android:onClick="viewSimOwnNumber"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+</LinearLayout>
