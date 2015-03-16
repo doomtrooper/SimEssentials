@@ -38,6 +38,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
 
         //Do something in response to button Sim Info button
         Intent intent=new Intent(this,SimDetails.class);
+        startActivity(intent);
     }
     public void viewSimBalance(View view){
         getBalance();
