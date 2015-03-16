@@ -8,4 +8,7 @@
     <string name="sim_ownnumber">Own Number</string>
     <string name="nosim_info">Oops!!! Some problem while reading SIM Card</string>
     <string name="title_activity_sim_details">SimDetails</string>
+    
+    
+    <string name="title_activity_sim_details">SimDetails</string>
 </resources>
