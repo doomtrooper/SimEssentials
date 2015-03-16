@@ -1,7 +1,9 @@
 package com.bitnoobwa.simessentials;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,9 +14,12 @@ public class SimDetails extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setContentView(R.layout.activity_sim_details);
         TextView OperatorName = (TextView)findViewById(R.id.OperatorName);
-        OperatorName.setText("My Awesome Text");
+        OperatorName.setText(telMgr.getNetworkOperatorName());
+        TextView DeviceId = (TextView)findViewById(R.id.DeviceId);
+        DeviceId.setText(telMgr.getDeviceId());
     }
 
 
