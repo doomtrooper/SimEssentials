@@ -9,15 +9,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
+import java.util.HashMap;
+
+import com.bitnoobwa.operators.Airtel;
+import com.bitnoobwa.operators.Operator;
+import com.bitnoobwa.operators.Reliance;
 
 
 public class MainActivitySimEssentials extends ActionBarActivity {
     private String operatorName=null;
+    private Operator operator;
     public void setOperatorName(String str){
         this.operatorName=str;
     }
     public String getOperatorName(){
+
         return operatorName;
     }
     @Override
@@ -29,6 +37,11 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         int simState = telMgr.getSimState();
         if(simState==TelephonyManager.SIM_STATE_READY){
             setContentView(R.layout.activity_main_activity_sim_essentials);
+            if(operatorName.contains("Reliance")){
+                operator=new Reliance();
+            }else if(operatorName.contains("Airtel")){
+                operator=new Airtel();
+            }
         }else{
             setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
         }
@@ -36,25 +49,18 @@ public class MainActivitySimEssentials extends ActionBarActivity {
     /** Called when the user clicks the Sim Info button */
     public void viewSimInfo(View view) {
 
-        //Do something in response to button Sim Info button
+        //Create new Activity in response to button Sim Info button
         Intent intent=new Intent(this,SimDetails.class);
         startActivity(intent);
     }
     public void viewSimBalance(View view){
-        getBalance();
-        String ussdCode = "*" + "367" + Uri.encode("#");
-        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ussdCode)));
+        runUSSDCode(operator.getBalUSSD());
     }
     public void viewSimOwnNumber(View view){
-        Context context=getApplicationContext();
-        CharSequence text="Own number will be Displayed";
-        int duration= Toast.LENGTH_SHORT;
-        Toast.makeText(context,getOperatorName(),duration).show();
-        String ussdCode = Uri.encode("*1#");
-        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ussdCode)));
+        runUSSDCode(operator.getOwnNoUSSD());
     }
-    public void getBalance(){
-
+    private void runUSSDCode(String ussdCode){
+        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ussdCode)));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
