@@ -60,7 +60,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         runUSSDCode(operator.getOwnNoUSSD());
     }
     private void runUSSDCode(String ussdCode){
-        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ussdCode)));
+        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(ussdCode))));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
