@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by razor on 3/4/15.
@@ -43,7 +44,6 @@ public class UssdXmlParser {
         InputStreamReader isr = null;
         char[] inputBuffer = null;
         String data = null;
-        ArrayList<String> items = new ArrayList<String>();
         try {
             isr = new InputStreamReader(getFis());
             inputBuffer = new char[fis.available()];
@@ -52,10 +52,8 @@ public class UssdXmlParser {
             isr.close();
             fis.close();
         } catch (FileNotFoundException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         try{
@@ -71,7 +69,8 @@ public class UssdXmlParser {
     }
 
     private Operator readFeed(XmlPullParser parser) throws XmlPullParserException, IOException{
-        Operator operator=null,temp=null;
+        List<Operator> operatorList=new ArrayList<>();
+        Operator temp=null;
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
         while (parser.nextTag()!=XmlPullParser.END_TAG){
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -80,15 +79,14 @@ public class UssdXmlParser {
             String name = parser.getName();
             // Starts by looking for the entry tag
             if (name.toLowerCase().equals("country")) {
-                if(parser.getAttributeValue(ns,"code").toLowerCase().equals("in")){
+                if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){
                     //parser.require(XmlPullParser.START_TAG,ns,"provider");
-                    while (parser.nextTag()!=XmlPullParser.END_TAG){
+                    while (parser.next()!=XmlPullParser.END_TAG){
                         if(parser.getEventType()!=XmlPullParser.START_TAG)
                             continue;
                         String tagNameInsideCountry=parser.getName();
                         if(tagNameInsideCountry.toLowerCase().equals("provider")){
-                            if((temp=readProvider(parser,getOperatorName()))!=null)
-                                operator=temp;
+                            operatorList.add(readProvider(parser));
                         }else {
                             skip(parser);
                         }
@@ -98,7 +96,7 @@ public class UssdXmlParser {
                 skip(parser);
             }
         }
-        return operator;
+        return findOperator(operatorList);
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -118,28 +116,63 @@ public class UssdXmlParser {
         }
     }
 
-    private Operator readProvider(XmlPullParser parser,String operatorName) throws IOException,XmlPullParserException{
-        Operator tempOperator=null;
+    private Operator readProvider(XmlPullParser parser) throws IOException,XmlPullParserException{
+        String balanceUSSD=null;
+        String ownNoUSSD=null;
+        String operatorUSSD=null;
+        String operatorName=null;
         parser.require(XmlPullParser.START_TAG,ns,"provider");
         while (parser.next()!=XmlPullParser.END_TAG){
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String tagName=parser.getName();
-            if(tagName.toLowerCase().equals("name")){
-                String operator=parser.getText();
-                if(operator.equals(operatorName)){
-                    tempOperator=getOperatorObject(parser);
-                }
-            }else {
-                skip(parser);
+            if(tagName.equalsIgnoreCase("name")){
+                    operatorName=readName(parser);
+            }else if (tagName.equalsIgnoreCase("balance-check")){
+                    balanceUSSD=getBalanceUSSD(parser);
+            }else if (tagName.equalsIgnoreCase("operator")){
+                    operatorUSSD=getOperatorUSSD(parser);
+            }else if (tagName.equalsIgnoreCase("own-no")){
+                    ownNoUSSD=getOwnNoUSSD(parser);
             }
         }
-        return tempOperator;
+        return new Operator(balanceUSSD, ownNoUSSD, operatorUSSD,operatorName);
     }
 
-    private Operator getOperatorObject(XmlPullParser parser){
-        Operator operator=null;
+    private String readName(XmlPullParser parser) throws IOException,XmlPullParserException{
+        parser.require(XmlPullParser.START_TAG,ns,"name");
+        String opName=parser.getText();
+        parser.require(XmlPullParser.END_TAG,ns,"name");
+        return opName;
+    }
 
+    private String getBalanceUSSD(XmlPullParser parser) throws  IOException,XmlPullParserException{
+        parser.require(XmlPullParser.START_TAG,ns,"balance-check");
+        String balUSSD=parser.getText();
+        parser.require(XmlPullParser.END_TAG,ns,"balance-check");
+        return balUSSD;
+    }
+    
+    private String getOperatorUSSD(XmlPullParser parser) throws IOException,XmlPullParserException{
+        parser.require(XmlPullParser.START_TAG,ns,"operator");
+        String opUSSD=parser.getText();
+        parser.require(XmlPullParser.END_TAG,ns,"operator");
+        return opUSSD;
+    }
+
+    private String getOwnNoUSSD(XmlPullParser parser) throws IOException,XmlPullParserException{
+        parser.require(XmlPullParser.START_TAG,ns,"own-no");
+        String ownNoUSSD=parser.getText();
+        parser.require(XmlPullParser.END_TAG,ns,"own-no");
+        return ownNoUSSD;
+    }
+
+    private Operator findOperator(List<Operator> operatorArrayList){
+        Operator operator=null;
+        for (Operator itr:operatorArrayList)
+            if (itr.getOperatorName().contains(operatorName.toLowerCase()))
+                return itr;
+        return operator;
     }
 }
