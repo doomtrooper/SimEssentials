@@ -24,6 +24,7 @@ public class SimDetails extends ActionBarActivity {
         setRowContentText(R.id.DeviceId,telMgr.getDeviceId());
         setRowContentText(R.id.CountryISO,telMgr.getSimCountryIso());
         setRowContentText(R.id.SimSerial,telMgr.getSimSerialNumber());
+        setRowContentText(R.id.SubId,telMgr.getSubscriberId());
     }
 
     private void setRowContentText(int rowId,String rowTxt){

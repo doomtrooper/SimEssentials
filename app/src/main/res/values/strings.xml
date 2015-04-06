@@ -13,6 +13,7 @@
     <string name="DeviceId">Device Id</string>
     <string name="CountryISO">Country ISO</string>
     <string name="SimSerial">SIM Serial</string>
+    <string name="SubId">Subs. Id</string>
 
     <string name="na">N/A</string>
     <string name="nosim_info">Oops!!! Some problem while reading SIM Card.</string>

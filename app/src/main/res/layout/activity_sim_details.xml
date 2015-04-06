@@ -102,6 +102,27 @@
                 android:textColor="@color/black"
                 />
         </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:text="@string/SubId"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/SubId"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+        </TableRow>
     </TableLayout>
 
 </LinearLayout>
