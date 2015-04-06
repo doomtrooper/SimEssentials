@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Authors:
+/**
+ * Created by razor on 4/03/2015.
+ */
+-->
+<serviceproviders>
+    <country code="in">
+        <provider>
+            <name>AIRCEL</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Airtel</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Vodafone</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>BSNL/CellOne</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Idea Cellular</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>MTNL</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Reliance</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Spice telecom</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+        <provider>
+            <name>Tata Docomo</name>
+            <balance-check>
+                <ussd> *111*1*3#</ussd>
+            </balance-check>
+        </provider>
+    </country>
+</serviceproviders>

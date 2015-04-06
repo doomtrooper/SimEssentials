@@ -9,24 +9,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.TelephonyManager;
 import android.view.View;
-import android.widget.Switch;
-import android.widget.Toast;
-import java.util.HashMap;
 
-import com.bitnoobwa.operators.Airtel;
 import com.bitnoobwa.operators.Operator;
-import com.bitnoobwa.operators.Reliance;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 public class MainActivitySimEssentials extends ActionBarActivity {
-    private String operatorName=null;
+    private String operatorName;
+    private String countryCode;
+    private String ussdXmlLocation="ussd.xml";
     private Operator operator;
     public void setOperatorName(String str){
         this.operatorName=str;
     }
+    public void setCountryCode(String str){ this.countryCode=str;}
     public String getOperatorName(){
 
         return operatorName;
+    }
+
+    public String getUssdXmlLocation() {
+        return ussdXmlLocation;
+    }
+    public String getCountryCode(){
+        return countryCode;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +42,16 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         /*setContentView(R.layout.activity_main_activity_sim_essentials);*/
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setOperatorName(telMgr.getNetworkOperatorName());
+        setCountryCode(telMgr.getSimCountryIso());
         int simState = telMgr.getSimState();
         if(simState==TelephonyManager.SIM_STATE_READY){
             setContentView(R.layout.activity_main_activity_sim_essentials);
-            if(operatorName.contains("Reliance")){
-                operator=new Reliance();
-            }else if(operatorName.contains("Airtel")){
-                operator=new Airtel();
+            FileInputStream fis=null;
+            try{
+                fis = getApplicationContext().openFileInput(getUssdXmlLocation());
+                UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),fis);
+            }catch (FileNotFoundException e){
+                setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
             }
         }else{
             setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
@@ -53,13 +64,14 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         Intent intent=new Intent(this,SimDetails.class);
         startActivity(intent);
     }
-    public void viewSimBalance(View view){
+    /*public void viewSimBalance(View view){
         runUSSDCode(operator.getBalUSSD());
     }
     public void viewSimOwnNumber(View view){
         runUSSDCode(operator.getOwnNoUSSD());
-    }
+    }*/
     private void runUSSDCode(String ussdCode){
+
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(ussdCode))));
     }
     @Override
