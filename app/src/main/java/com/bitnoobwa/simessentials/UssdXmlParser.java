@@ -72,20 +72,19 @@ public class UssdXmlParser {
         List<Operator> operatorList=new ArrayList<>();
         Operator temp=null;
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
-        while (parser.nextTag()!=XmlPullParser.END_TAG){
+        while (parser.next()!=XmlPullParser.END_TAG){
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
             // Starts by looking for the entry tag
-            if (name.toLowerCase().equals("country")) {
+            if (name.equalsIgnoreCase("country")) {
                 if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){
-                    //parser.require(XmlPullParser.START_TAG,ns,"provider");
                     while (parser.next()!=XmlPullParser.END_TAG){
                         if(parser.getEventType()!=XmlPullParser.START_TAG)
                             continue;
                         String tagNameInsideCountry=parser.getName();
-                        if(tagNameInsideCountry.toLowerCase().equals("provider")){
+                        if(tagNameInsideCountry.equalsIgnoreCase("provider")){
                             operatorList.add(readProvider(parser));
                         }else {
                             skip(parser);

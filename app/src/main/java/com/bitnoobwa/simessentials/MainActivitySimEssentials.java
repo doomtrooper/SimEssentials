@@ -55,7 +55,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
                 UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),fis);
                 operator=xmlParser.parse();
             }catch (FileNotFoundException e){
-                setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
+                setContentView(R.layout.activity_main_activity_sim_essentials_error);
             }catch (IOException e2){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
             }catch (XmlPullParserException e3){
