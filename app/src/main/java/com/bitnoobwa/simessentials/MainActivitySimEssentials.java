@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bitnoobwa.operators.Operator;
 
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class MainActivitySimEssentials extends ActionBarActivity {
     private String operatorName;
     private String countryCode;
-    private String ussdXmlLocation="ussd.xml";
+    private String ussdXmlLocation= "ussd.xml";
     private Operator operator;
     public void setOperatorName(String str){
         this.operatorName=str;
@@ -51,15 +52,22 @@ public class MainActivitySimEssentials extends ActionBarActivity {
             setContentView(R.layout.activity_main_activity_sim_essentials);
             FileInputStream fis=null;
             try{
-                fis = getApplicationContext().openFileInput(getUssdXmlLocation());
+                //fis=context.getResources().openRawResource(R.xml.ussd);
+                //fis = getApplicationContext().openFileInput(getUssdXmlLocation());
                 UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),fis);
                 operator=xmlParser.parse();
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
+                TextView errorView=(TextView)findViewById(R.id.error_msg);
+                errorView.setText(e.getMessage());
             }catch (IOException e2){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
+                TextView errorView=(TextView)findViewById(R.id.error_msg);
+                errorView.setText(e2.getMessage());
             }catch (XmlPullParserException e3){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
+                TextView errorView=(TextView)findViewById(R.id.error_msg);
+                errorView.setText(e3.getMessage());
             }
         }else{
             setContentView(R.layout.activity_main_activity_sim_essentials_nosim);

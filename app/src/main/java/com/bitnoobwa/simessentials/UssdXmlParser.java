@@ -1,5 +1,7 @@
 package com.bitnoobwa.simessentials;
 
+import android.util.Log;
+
 import com.bitnoobwa.operators.Operator;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -170,8 +172,12 @@ public class UssdXmlParser {
     private Operator findOperator(List<Operator> operatorArrayList){
         Operator operator=null;
         for (Operator itr:operatorArrayList)
-            if (itr.getOperatorName().contains(operatorName.toLowerCase()))
+            if (itr.getOperatorName().contains(operatorName.toLowerCase())){
+                Log.v("operator found", itr.toString());
                 return itr;
+
+            }
+
         return operator;
     }
 }
