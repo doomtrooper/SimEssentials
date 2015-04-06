@@ -1,5 +1,6 @@
 package com.bitnoobwa.simessentials;
 
+import android.content.res.XmlResourceParser;
 import android.util.Log;
 
 import com.bitnoobwa.operators.Operator;
@@ -22,28 +23,29 @@ import java.util.List;
 public class UssdXmlParser {
     private String operatorName;
     private String countryCode;
-    private XmlPullParserFactory xmlFactoryObject;
+    /*private XmlPullParserFactory xmlFactoryObject;
     private XmlPullParser myparser;
-    private FileInputStream fis;
-    private String ns=null; //namespace
+    private FileInputStream fis;*/
+    private XmlResourceParser myXml;
+    private String ns=null; //namespace is set to null
     public String getOperatorName() {
         return operatorName;
     }
     public String getCountryCode(){
         return countryCode;
     }
-    public UssdXmlParser(String operatorName, String countryCode, FileInputStream fis) {
+    public UssdXmlParser(String operatorName, String countryCode, XmlResourceParser myXml) {
         this.operatorName = operatorName;
         this.countryCode=countryCode;
-        this.fis = fis;
+        this.myXml = myXml;
     }
 
-    public FileInputStream getFis() {
+    /*public FileInputStream getFis() {
         return fis;
-    }
+    }*/
 
     public Operator parse() throws XmlPullParserException, IOException {
-        InputStreamReader isr = null;
+        /*InputStreamReader isr = null;
         char[] inputBuffer = null;
         String data = null;
         try {
@@ -57,24 +59,30 @@ public class UssdXmlParser {
             e2.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         try{
-            xmlFactoryObject = XmlPullParserFactory.newInstance();
+            /*xmlFactoryObject = XmlPullParserFactory.newInstance();
             myparser = xmlFactoryObject.newPullParser();
             myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
             myparser.setInput(new StringReader(data));
-            myparser.nextTag();
-        }finally {
-
+            myparser.nextTag();*/
+            myXml.next();
+            return readFeed(myXml);
+        }catch (XmlPullParserException e){
+            Log.e("error-xmlparsing",e.getMessage());
+        }catch (IOException e2){
+            Log.e("error-IO",e2.getMessage());
         }
-        return readFeed(myparser);
+        return null;
     }
 
-    private Operator readFeed(XmlPullParser parser) throws XmlPullParserException, IOException{
+    private Operator readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
         List<Operator> operatorList=new ArrayList<>();
         Operator temp=null;
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
+        Log.d("entry-method","parser enters-reedFeed()");
         while (parser.next()!=XmlPullParser.END_TAG){
+            Log.d("entry-xml","parser enters the serviceproviders");
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
@@ -82,6 +90,7 @@ public class UssdXmlParser {
             // Starts by looking for the entry tag
             if (name.equalsIgnoreCase("country")) {
                 if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){
+                    Log.v("enter-county","parser enters county tag!!!");
                     while (parser.next()!=XmlPullParser.END_TAG){
                         if(parser.getEventType()!=XmlPullParser.START_TAG)
                             continue;
@@ -100,7 +109,7 @@ public class UssdXmlParser {
         return findOperator(operatorList);
     }
 
-    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private void skip(XmlResourceParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
         }
@@ -117,11 +126,12 @@ public class UssdXmlParser {
         }
     }
 
-    private Operator readProvider(XmlPullParser parser) throws IOException,XmlPullParserException{
+    private Operator readProvider(XmlResourceParser parser) throws IOException,XmlPullParserException{
         String balanceUSSD=null;
         String ownNoUSSD=null;
         String operatorUSSD=null;
         String operatorName=null;
+        Log.v("entry-readProvider","Entry to read provider!!!");
         parser.require(XmlPullParser.START_TAG,ns,"provider");
         while (parser.next()!=XmlPullParser.END_TAG){
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -141,28 +151,29 @@ public class UssdXmlParser {
         return new Operator(balanceUSSD, ownNoUSSD, operatorUSSD,operatorName);
     }
 
-    private String readName(XmlPullParser parser) throws IOException,XmlPullParserException{
+    private String readName(XmlResourceParser parser) throws IOException,XmlPullParserException{
+        Log.v("entry-readName","Entry to readName!!!");
         parser.require(XmlPullParser.START_TAG,ns,"name");
         String opName=parser.getText();
         parser.require(XmlPullParser.END_TAG,ns,"name");
         return opName;
     }
 
-    private String getBalanceUSSD(XmlPullParser parser) throws  IOException,XmlPullParserException{
+    private String getBalanceUSSD(XmlResourceParser parser) throws  IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"balance-check");
         String balUSSD=parser.getText();
         parser.require(XmlPullParser.END_TAG,ns,"balance-check");
         return balUSSD;
     }
     
-    private String getOperatorUSSD(XmlPullParser parser) throws IOException,XmlPullParserException{
+    private String getOperatorUSSD(XmlResourceParser parser) throws IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"operator");
         String opUSSD=parser.getText();
         parser.require(XmlPullParser.END_TAG,ns,"operator");
         return opUSSD;
     }
 
-    private String getOwnNoUSSD(XmlPullParser parser) throws IOException,XmlPullParserException{
+    private String getOwnNoUSSD(XmlResourceParser parser) throws IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"own-no");
         String ownNoUSSD=parser.getText();
         parser.require(XmlPullParser.END_TAG,ns,"own-no");
@@ -170,14 +181,14 @@ public class UssdXmlParser {
     }
 
     private Operator findOperator(List<Operator> operatorArrayList){
+        Log.v("entry-findOperator","Entry to findOperator!!!");
         Operator operator=null;
-        for (Operator itr:operatorArrayList)
-            if (itr.getOperatorName().contains(operatorName.toLowerCase())){
+        for (Operator itr:operatorArrayList) {
+            if (itr.getOperatorName().contains(operatorName.toLowerCase())) {
                 Log.v("operator found", itr.toString());
                 return itr;
-
             }
-
+        }
         return operator;
     }
 }

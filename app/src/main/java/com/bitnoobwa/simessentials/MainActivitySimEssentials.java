@@ -2,9 +2,12 @@ package com.bitnoobwa.simessentials;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.TelephonyManager;
@@ -30,7 +33,6 @@ public class MainActivitySimEssentials extends ActionBarActivity {
     }
     public void setCountryCode(String str){ this.countryCode=str;}
     public String getOperatorName(){
-
         return operatorName;
     }
 
@@ -46,16 +48,21 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         /*setContentView(R.layout.activity_main_activity_sim_essentials);*/
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setOperatorName(telMgr.getNetworkOperatorName().toLowerCase());
+        Log.d("op-name","setting operator name.");
         setCountryCode(telMgr.getSimCountryIso().toLowerCase());
+        Log.d("county","setting county");
         int simState = telMgr.getSimState();
         if(simState==TelephonyManager.SIM_STATE_READY){
             setContentView(R.layout.activity_main_activity_sim_essentials);
             FileInputStream fis=null;
             try{
+                Resources res = this.getResources();
                 //fis=context.getResources().openRawResource(R.xml.ussd);
                 //fis = getApplicationContext().openFileInput(getUssdXmlLocation());
-                UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),fis);
+                XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
+                UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),myXml);
                 operator=xmlParser.parse();
+                Log.v("operator",operator.toString());
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
                 TextView errorView=(TextView)findViewById(R.id.error_msg);
