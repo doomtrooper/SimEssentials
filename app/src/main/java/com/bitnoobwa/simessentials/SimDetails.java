@@ -10,18 +10,28 @@ import android.widget.TextView;
 
 
 public class SimDetails extends ActionBarActivity {
-
+    private TelephonyManager telMgr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setContentView(R.layout.activity_sim_details);
-        TextView OperatorName = (TextView)findViewById(R.id.OperatorName);
-        OperatorName.setText(telMgr.getNetworkOperatorName());
-        TextView DeviceId = (TextView)findViewById(R.id.DeviceId);
-        DeviceId.setText(telMgr.getDeviceId());
+        setSimDetailsView();
     }
 
+    private void setSimDetailsView(){
+        setRowContentText(R.id.OperatorName,telMgr.getNetworkOperatorName());
+        setRowContentText(R.id.DeviceId,telMgr.getDeviceId());
+        setRowContentText(R.id.CountryISO,telMgr.getSimCountryIso());
+        setRowContentText(R.id.SimSerial,telMgr.getSimSerialNumber());
+    }
+
+    private void setRowContentText(int rowId,String rowTxt){
+        TextView rowView = (TextView)findViewById(rowId);
+        if(rowTxt!=null){
+            rowView.setText(rowTxt);
+        }else rowView.setText(R.string.na);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

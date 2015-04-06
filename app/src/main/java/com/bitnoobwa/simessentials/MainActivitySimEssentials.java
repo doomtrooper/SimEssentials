@@ -44,8 +44,8 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         /*setContentView(R.layout.activity_main_activity_sim_essentials);*/
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        setOperatorName(telMgr.getNetworkOperatorName());
-        setCountryCode(telMgr.getSimCountryIso());
+        setOperatorName(telMgr.getNetworkOperatorName().toLowerCase());
+        setCountryCode(telMgr.getSimCountryIso().toLowerCase());
         int simState = telMgr.getSimState();
         if(simState==TelephonyManager.SIM_STATE_READY){
             setContentView(R.layout.activity_main_activity_sim_essentials);

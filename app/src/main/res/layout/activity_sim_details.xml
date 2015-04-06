@@ -60,6 +60,48 @@
                 android:textColor="@color/black"
                 />
         </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:text="@string/CountryISO"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/CountryISO"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:text="@string/SimSerial"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/SimSerial"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+        </TableRow>
     </TableLayout>
 
 </LinearLayout>
