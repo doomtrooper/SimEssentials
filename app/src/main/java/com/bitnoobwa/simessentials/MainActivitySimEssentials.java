@@ -12,8 +12,11 @@ import android.view.View;
 
 import com.bitnoobwa.operators.Operator;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MainActivitySimEssentials extends ActionBarActivity {
@@ -50,8 +53,13 @@ public class MainActivitySimEssentials extends ActionBarActivity {
             try{
                 fis = getApplicationContext().openFileInput(getUssdXmlLocation());
                 UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),fis);
+                operator=xmlParser.parse();
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
+            }catch (IOException e2){
+                setContentView(R.layout.activity_main_activity_sim_essentials_error);
+            }catch (XmlPullParserException e3){
+                setContentView(R.layout.activity_main_activity_sim_essentials_error);
             }
         }else{
             setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
