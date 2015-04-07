@@ -36,8 +36,10 @@ public class UssdXmlParser {
         this.countryCode = countryCode;
         this.myXml = myXml;
     }
-
-    public Operator parse() throws XmlPullParserException, IOException {
+    public Operator getOperator() throws XmlPullParserException,IOException{
+        return findOperator(parse());
+    }
+    public List<Operator> parse() throws XmlPullParserException, IOException {
         try{
             myXml.next();
             myXml.next();
@@ -50,7 +52,7 @@ public class UssdXmlParser {
         return null;
     }
 
-    private Operator readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
+    private List<Operator> readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
         List<Operator> operatorList=new ArrayList<>();
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
         //Log.d("entry-method","parser enters-reedFeed()");
@@ -80,7 +82,7 @@ public class UssdXmlParser {
                 skip(parser);
             }
         }
-        return findOperator(operatorList);
+        return operatorList;
     }
 
     private void skip(XmlResourceParser parser) throws XmlPullParserException, IOException {

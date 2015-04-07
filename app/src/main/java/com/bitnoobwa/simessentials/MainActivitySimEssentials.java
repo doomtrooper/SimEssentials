@@ -53,7 +53,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
             try{
                 XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
                 UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),myXml);
-                operator=xmlParser.parse();
+                operator=xmlParser.getOperator();
                 //Log.v("opName",operator.toString());
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);

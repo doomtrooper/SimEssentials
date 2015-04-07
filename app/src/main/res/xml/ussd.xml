@@ -8,51 +8,51 @@
     <country code="in">
         <provider>
             <name>AIRCEL</name>
-            <balance-check>*121#</balance-check>
+            <balance-check>*111#</balance-check>
             <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <operator>121</operator>
         </provider>
         <provider>
             <name>Airtel</name>
             <balance-check>*123#</balance-check>
-            <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <own-no>*282#</own-no>
+            <operator>121</operator>
         </provider>
         <provider>
             <name>Vodafone</name>
-            <balance-check>*363#</balance-check>
-            <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <balance-check>*141#</balance-check>
+            <own-no>*111*2#</own-no>
+            <operator>111</operator>
         </provider>
         <provider>
             <name>BSNL/CellOne</name>
             <balance-check>*123#</balance-check>
             <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <operator>123</operator>
         </provider>
         <provider>
             <name>MTNL</name>
-            <balance-check>*457#</balance-check>
+            <balance-check>*444#</balance-check>
             <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <operator>198</operator>
         </provider>
         <provider>
             <name>Reliance</name>
             <balance-check>*367#</balance-check>
             <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <operator>198</operator>
         </provider>
         <provider>
-            <name>Spice telecom</name>
+            <name>Spice</name>
             <balance-check>*367#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>
         <provider>
-            <name>Tata Docomo</name>
-            <balance-check>*367#</balance-check>
+            <name>Docomo</name>
+            <balance-check>*111#</balance-check>
             <own-no>*1#</own-no>
-            <operator>*367</operator>
+            <operator>121</operator>
         </provider>
     </country>
 </serviceproviders>
