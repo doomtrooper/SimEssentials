@@ -37,6 +37,7 @@ public class Operator {
                 "balanceUSSD='" + balanceUSSD + '\'' +
                 ", ownNoUSSD='" + ownNoUSSD + '\'' +
                 ", operatorUSSD='" + operatorUSSD + '\'' +
+                ", operatorName='" + operatorName + '\'' +
                 '}';
     }
 }

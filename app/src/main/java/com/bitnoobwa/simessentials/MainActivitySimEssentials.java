@@ -26,8 +26,8 @@ import java.io.IOException;
 public class MainActivitySimEssentials extends ActionBarActivity {
     private String operatorName;
     private String countryCode;
-    private String ussdXmlLocation= "ussd.xml";
     private Operator operator;
+
     public void setOperatorName(String str){
         this.operatorName=str;
     }
@@ -35,34 +35,26 @@ public class MainActivitySimEssentials extends ActionBarActivity {
     public String getOperatorName(){
         return operatorName;
     }
-
-    public String getUssdXmlLocation() {
-        return ussdXmlLocation;
-    }
     public String getCountryCode(){
         return countryCode;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.activity_main_activity_sim_essentials);*/
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setOperatorName(telMgr.getNetworkOperatorName().toLowerCase());
-        Log.d("op-name","setting operator name.");
+        //Log.d("op-name","setting operator name:"+getOperatorName());
         setCountryCode(telMgr.getSimCountryIso().toLowerCase());
-        Log.d("county","setting county");
+        //Log.d("county","setting county:"+getCountryCode());
         int simState = telMgr.getSimState();
         if(simState==TelephonyManager.SIM_STATE_READY){
             setContentView(R.layout.activity_main_activity_sim_essentials);
-            FileInputStream fis=null;
             try{
-                Resources res = this.getResources();
-                //fis=context.getResources().openRawResource(R.xml.ussd);
-                //fis = getApplicationContext().openFileInput(getUssdXmlLocation());
                 XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
                 UssdXmlParser xmlParser=new UssdXmlParser(getOperatorName(),getCountryCode(),myXml);
                 operator=xmlParser.parse();
-                Log.v("operator",operator.toString());
+                //Log.v("opName",operator.toString());
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
                 TextView errorView=(TextView)findViewById(R.id.error_msg);
@@ -75,6 +67,10 @@ public class MainActivitySimEssentials extends ActionBarActivity {
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
                 TextView errorView=(TextView)findViewById(R.id.error_msg);
                 errorView.setText(e3.getMessage());
+            }catch (Exception e4){
+                setContentView(R.layout.activity_main_activity_sim_essentials_error);
+                TextView errorView=(TextView)findViewById(R.id.error_msg);
+                errorView.setText(e4.getMessage());
             }
         }else{
             setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
@@ -82,19 +78,18 @@ public class MainActivitySimEssentials extends ActionBarActivity {
     }
     /** Called when the user clicks the Sim Info button */
     public void viewSimInfo(View view) {
-
+        //Log.d("sim-details","starting new Activity SIm Details");
         //Create new Activity in response to button Sim Info button
         Intent intent=new Intent(this,SimDetails.class);
         startActivity(intent);
     }
-    /*public void viewSimBalance(View view){
-        runUSSDCode(operator.getBalUSSD());
+    public void viewSimBalance(View view){
+        runUSSDCode(operator.getBalanceUSSD());
     }
     public void viewSimOwnNumber(View view){
         runUSSDCode(operator.getOwnNoUSSD());
-    }*/
+    }
     private void runUSSDCode(String ussdCode){
-
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(ussdCode))));
     }
     @Override

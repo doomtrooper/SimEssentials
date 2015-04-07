@@ -23,9 +23,6 @@ import java.util.List;
 public class UssdXmlParser {
     private String operatorName;
     private String countryCode;
-    /*private XmlPullParserFactory xmlFactoryObject;
-    private XmlPullParser myparser;
-    private FileInputStream fis;*/
     private XmlResourceParser myXml;
     private String ns=null; //namespace is set to null
     public String getOperatorName() {
@@ -36,36 +33,13 @@ public class UssdXmlParser {
     }
     public UssdXmlParser(String operatorName, String countryCode, XmlResourceParser myXml) {
         this.operatorName = operatorName;
-        this.countryCode=countryCode;
+        this.countryCode = countryCode;
         this.myXml = myXml;
     }
 
-    /*public FileInputStream getFis() {
-        return fis;
-    }*/
-
     public Operator parse() throws XmlPullParserException, IOException {
-        /*InputStreamReader isr = null;
-        char[] inputBuffer = null;
-        String data = null;
-        try {
-            isr = new InputStreamReader(getFis());
-            inputBuffer = new char[fis.available()];
-            isr.read(inputBuffer);
-            data = new String(inputBuffer);
-            isr.close();
-            fis.close();
-        } catch (FileNotFoundException e2) {
-            e2.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         try{
-            /*xmlFactoryObject = XmlPullParserFactory.newInstance();
-            myparser = xmlFactoryObject.newPullParser();
-            myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
-            myparser.setInput(new StringReader(data));
-            myparser.nextTag();*/
+            myXml.next();
             myXml.next();
             return readFeed(myXml);
         }catch (XmlPullParserException e){
@@ -78,19 +52,19 @@ public class UssdXmlParser {
 
     private Operator readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
         List<Operator> operatorList=new ArrayList<>();
-        Operator temp=null;
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
-        Log.d("entry-method","parser enters-reedFeed()");
+        //Log.d("entry-method","parser enters-reedFeed()");
         while (parser.next()!=XmlPullParser.END_TAG){
-            Log.d("entry-xml","parser enters the serviceproviders");
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
+            //Log.d("entry-xml","parser enters the serviceproviders");
             String name = parser.getName();
+            Log.d("entry-xml",name);
             // Starts by looking for the entry tag
             if (name.equalsIgnoreCase("country")) {
                 if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){
-                    Log.v("enter-county","parser enters county tag!!!");
+                    //Log.v("enter-county","parser enters county tag!!!");
                     while (parser.next()!=XmlPullParser.END_TAG){
                         if(parser.getEventType()!=XmlPullParser.START_TAG)
                             continue;
@@ -131,7 +105,7 @@ public class UssdXmlParser {
         String ownNoUSSD=null;
         String operatorUSSD=null;
         String operatorName=null;
-        Log.v("entry-readProvider","Entry to read provider!!!");
+        //Log.v("entry-readProvider","Entry to read provider!!!");
         parser.require(XmlPullParser.START_TAG,ns,"provider");
         while (parser.next()!=XmlPullParser.END_TAG){
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -152,40 +126,43 @@ public class UssdXmlParser {
     }
 
     private String readName(XmlResourceParser parser) throws IOException,XmlPullParserException{
-        Log.v("entry-readName","Entry to readName!!!");
         parser.require(XmlPullParser.START_TAG,ns,"name");
-        String opName=parser.getText();
+        String opName=parser.nextText();
+        //Log.v("entry-readName","Entry to readName:"+opName);
         parser.require(XmlPullParser.END_TAG,ns,"name");
-        return opName;
+        return opName.toLowerCase();
     }
 
     private String getBalanceUSSD(XmlResourceParser parser) throws  IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"balance-check");
-        String balUSSD=parser.getText();
+        String balUSSD=parser.nextText();
+        //Log.v("entry-readName","Entry to readName:"+balUSSD);
         parser.require(XmlPullParser.END_TAG,ns,"balance-check");
-        return balUSSD;
+        return balUSSD.toLowerCase();
     }
     
     private String getOperatorUSSD(XmlResourceParser parser) throws IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"operator");
-        String opUSSD=parser.getText();
+        String opUSSD=parser.nextText();
+        //Log.v("entry-readName","Entry to readName:"+opUSSD);
         parser.require(XmlPullParser.END_TAG,ns,"operator");
-        return opUSSD;
+        return opUSSD.toLowerCase();
     }
 
     private String getOwnNoUSSD(XmlResourceParser parser) throws IOException,XmlPullParserException{
         parser.require(XmlPullParser.START_TAG,ns,"own-no");
-        String ownNoUSSD=parser.getText();
+        String ownNoUSSD=parser.nextText();
+        //Log.v("entry-readName","Entry to readName:"+ownNoUSSD);
         parser.require(XmlPullParser.END_TAG,ns,"own-no");
-        return ownNoUSSD;
+        return ownNoUSSD.toLowerCase();
     }
 
     private Operator findOperator(List<Operator> operatorArrayList){
         Log.v("entry-findOperator","Entry to findOperator!!!");
         Operator operator=null;
         for (Operator itr:operatorArrayList) {
-            if (itr.getOperatorName().contains(operatorName.toLowerCase())) {
-                Log.v("operator found", itr.toString());
+            if (itr.getOperatorName().contains(getOperatorName().toLowerCase())) {
+                //Log.v("findOperator","Operator Found:"+itr.getOperatorName());
                 return itr;
             }
         }

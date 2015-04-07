@@ -8,36 +8,31 @@
     <country code="in">
         <provider>
             <name>AIRCEL</name>
-            <balance-check>*367#</balance-check>
+            <balance-check>*121#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>
         <provider>
             <name>Airtel</name>
-            <balance-check>*367#</balance-check>
+            <balance-check>*123#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>
         <provider>
             <name>Vodafone</name>
-            <balance-check>*367#</balance-check>
+            <balance-check>*363#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>
         <provider>
             <name>BSNL/CellOne</name>
-            <balance-check>*367#</balance-check>
-            <own-no>*1#</own-no>
-            <operator>*367</operator>
-        </provider>
-        <provider>
-            <balance-check>*367#</balance-check>
+            <balance-check>*123#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>
         <provider>
             <name>MTNL</name>
-            <balance-check>*367#</balance-check>
+            <balance-check>*457#</balance-check>
             <own-no>*1#</own-no>
             <operator>*367</operator>
         </provider>

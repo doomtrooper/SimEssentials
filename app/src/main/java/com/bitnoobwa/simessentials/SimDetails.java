@@ -4,8 +4,10 @@ import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -14,12 +16,14 @@ public class SimDetails extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setContentView(R.layout.activity_sim_details);
+        telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setSimDetailsView();
     }
 
     private void setSimDetailsView(){
+        /*Log.v("setSimDetailsView","Inside setSimDetailsView()");
+        Log.v("OpID",String.valueOf(R.id.OperatorName));*/
         setRowContentText(R.id.OperatorName,telMgr.getNetworkOperatorName());
         setRowContentText(R.id.DeviceId,telMgr.getDeviceId());
         setRowContentText(R.id.CountryISO,telMgr.getSimCountryIso());
@@ -31,6 +35,7 @@ public class SimDetails extends ActionBarActivity {
         TextView rowView = (TextView)findViewById(rowId);
         if(rowTxt!=null){
             rowView.setText(rowTxt);
+            //Log.v("textView", rowId + rowTxt);
         }else rowView.setText(R.string.na);
     }
 
