@@ -61,7 +61,7 @@ public class UssdXmlParser {
             //Log.d("entry-xml","parser enters the serviceproviders");
             String name = parser.getName();
             Log.d("entry-xml",name);
-            // Starts by looking for the entry tag
+            // Starts by looking for the country tag
             if (name.equalsIgnoreCase("country")) {
                 if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){
                     //Log.v("enter-county","parser enters county tag!!!");

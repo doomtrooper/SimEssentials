@@ -57,25 +57,28 @@ public class MainActivitySimEssentials extends ActionBarActivity {
                 //Log.v("opName",operator.toString());
             }catch (FileNotFoundException e){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
-                TextView errorView=(TextView)findViewById(R.id.error_msg);
-                errorView.setText(e.getMessage());
+                setErrorText(R.id.error_msg,R.string.errorXMLparsing);
             }catch (IOException e2){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
-                TextView errorView=(TextView)findViewById(R.id.error_msg);
-                errorView.setText(e2.getMessage());
+                setErrorText(R.id.error_msg,R.string.errorXMLparsing);
             }catch (XmlPullParserException e3){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
-                TextView errorView=(TextView)findViewById(R.id.error_msg);
-                errorView.setText(e3.getMessage());
+                setErrorText(R.id.error_msg,R.string.errorXMLparsing);
             }catch (Exception e4){
                 setContentView(R.layout.activity_main_activity_sim_essentials_error);
-                TextView errorView=(TextView)findViewById(R.id.error_msg);
-                errorView.setText(e4.getMessage());
+                setErrorText(R.id.error_msg,R.string.errorXMLparsing);
             }
         }else{
-            setContentView(R.layout.activity_main_activity_sim_essentials_nosim);
+            setContentView(R.layout.activity_main_activity_sim_essentials_error);
+            setErrorText(R.id.error_msg,R.string.nosim_info);
         }
     }
+
+    private void setErrorText(int textViewId,int textToSet){
+        TextView rowView = (TextView)findViewById(textViewId);
+        rowView.setText(textToSet);
+    }
+
     /** Called when the user clicks the Sim Info button */
     public void viewSimInfo(View view) {
         //Log.d("sim-details","starting new Activity SIm Details");
