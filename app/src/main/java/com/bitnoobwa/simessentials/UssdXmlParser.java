@@ -31,6 +31,9 @@ public class UssdXmlParser {
     public String getCountryCode(){
         return countryCode;
     }
+    public UssdXmlParser(XmlResourceParser myXml){
+        this.myXml=myXml;
+    }
     public UssdXmlParser(String operatorName, String countryCode, XmlResourceParser myXml) {
         this.operatorName = operatorName;
         this.countryCode = countryCode;

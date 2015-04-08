@@ -6,7 +6,7 @@
     <string name="sim_info">Sim Info</string>
     <string name="sim_balance">Check Balance</string>
     <string name="sim_ownnumber">Own Number</string>
-
+    <string name="sim_viewall">View All USSDs</string>
     <string name="title_activity_sim_details">SimDetails</string>
 
     <string name="OperatorName">Operator</string>
@@ -18,4 +18,5 @@
     <string name="na">N/A</string>
     <string name="nosim_info">Oops!!! Some problem while reading SIM Card.</string>
     <string name="errorXMLparsing">Oops!!! Seems like something went Wrong.</string>
+    <string name="title_activity_all_ussd">AllUssd</string>
 </resources>

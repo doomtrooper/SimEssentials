@@ -86,6 +86,12 @@ public class MainActivitySimEssentials extends ActionBarActivity {
         Intent intent=new Intent(this,SimDetails.class);
         startActivity(intent);
     }
+
+    public void viewAllUSSD(View view){
+        Intent intent=new Intent(this,AllUssd.class);
+        startActivity(intent);
+    }
+
     public void viewSimBalance(View view){
         runUSSDCode(operator.getBalanceUSSD());
     }
