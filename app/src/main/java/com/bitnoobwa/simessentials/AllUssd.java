@@ -14,6 +14,7 @@ import com.bitnoobwa.operators.Operator;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -25,11 +26,14 @@ public class AllUssd extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_all_ussd);
+        setContentView(R.layout.activity_all_ussd);
         XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
         UssdXmlParser xmlParser=new UssdXmlParser(myXml);
+        List<Operator> tempOperatorList;
         try{
-            setOperatoList(xmlParser.parse());
+            tempOperatorList=xmlParser.parse();
+            Collections.sort(tempOperatorList);
+            setOperatoList(tempOperatorList);
             populateOperatorsListView();
         }catch (XmlPullParserException e){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
@@ -69,7 +73,6 @@ public class AllUssd extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

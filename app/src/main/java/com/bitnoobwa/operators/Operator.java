@@ -1,9 +1,11 @@
 package com.bitnoobwa.operators;
 
+import java.util.Comparator;
+
 /**
  * Created by aparsh on 3/19/2015.
  */
-public class Operator {
+public class Operator implements Comparable<Operator>{
     public final String balanceUSSD;
     public final String ownNoUSSD;
     public final String operatorUSSD;
@@ -39,5 +41,9 @@ public class Operator {
                 ", operatorUSSD='" + operatorUSSD + '\'' +
                 ", operatorName='" + operatorName + '\'' +
                 '}';
+    }
+    @Override
+    public int compareTo(Operator obj2){
+        return this.getOperatorName().compareTo(obj2.getOperatorName());
     }
 }
