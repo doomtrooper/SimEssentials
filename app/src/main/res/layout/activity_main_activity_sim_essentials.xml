@@ -49,7 +49,7 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:id="@+id/button_ownnumber"
-        android:onClick="viewAllUSSD"
+        android:onClick="viewSimOwnNumber"
         style="?android:attr/borderlessButtonStyle"
         />
 
@@ -61,7 +61,7 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:id="@+id/button_viewall"
-        android:onClick="viewSimOwnNumber"
+        android:onClick="viewAllUSSD"
         style="?android:attr/borderlessButtonStyle"
         />
 

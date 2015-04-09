@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">SimEssentials</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="sim_info">Sim Info</string>
     <string name="sim_balance">Check Balance</string>
@@ -18,5 +17,11 @@
     <string name="na">N/A</string>
     <string name="nosim_info">Oops!!! Some problem while reading SIM Card.</string>
     <string name="errorXMLparsing">Oops!!! Seems like something went Wrong.</string>
+    <string name="e1">Error 1</string>
+    <string name="e2">Error 3</string>
+    <string name="e3">Error 3</string>
+    <string name="e4">Error 4</string>
+
     <string name="title_activity_all_ussd">AllUssd</string>
+
 </resources>

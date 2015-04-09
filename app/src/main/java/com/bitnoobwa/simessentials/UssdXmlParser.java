@@ -31,7 +31,8 @@ public class UssdXmlParser {
     public String getCountryCode(){
         return countryCode;
     }
-    public UssdXmlParser(XmlResourceParser myXml){
+    public UssdXmlParser(String countryCode,XmlResourceParser myXml){
+        this.countryCode=countryCode;
         this.myXml=myXml;
     }
     public UssdXmlParser(String operatorName, String countryCode, XmlResourceParser myXml) {
@@ -65,7 +66,7 @@ public class UssdXmlParser {
             }
             //Log.d("entry-xml","parser enters the serviceproviders");
             String name = parser.getName();
-            Log.d("entry-xml",name);
+            //Log.d("entry-xml",name);
             // Starts by looking for the country tag
             if (name.equalsIgnoreCase("country")) {
                 if(parser.getAttributeValue(ns,"code").toLowerCase().equals(getCountryCode())){

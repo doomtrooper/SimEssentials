@@ -89,6 +89,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
 
     public void viewAllUSSD(View view){
         Intent intent=new Intent(this,AllUssd.class);
+        intent.putExtra("countryCode",getCountryCode());
         startActivity(intent);
     }
 
