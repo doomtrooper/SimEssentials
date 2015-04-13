@@ -43,7 +43,7 @@ public class MainActivitySimEssentials extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TelephonyManager telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        setOperatorName(telMgr.getNetworkOperatorName().toLowerCase());
+        setOperatorName(telMgr.getNetworkOperatorName().toLowerCase().substring(0,4)); //splitting the operator name
         //Log.d("op-name","setting operator name:"+getOperatorName());
         setCountryCode(telMgr.getSimCountryIso().toLowerCase());
         //Log.d("county","setting county:"+getCountryCode());

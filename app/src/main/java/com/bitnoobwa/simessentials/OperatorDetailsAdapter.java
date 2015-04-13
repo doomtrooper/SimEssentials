@@ -47,6 +47,7 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         // Get the data item for this position
+        Log.d("position",String.valueOf(position));
         Operator operator=getItem(position);
         Log.v("OperatorAdapter",operator.toString());
         if (convertView == null) {
