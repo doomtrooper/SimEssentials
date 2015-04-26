@@ -35,6 +35,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bitnoobwa.simessentials.MainActivitySimEssentials" />
         </activity>
+        <activity
+            android:name=".OperatorDetails"
+            android:label="@string/title_activity_operator_details"
+            android:parentActivityName=".AllUssd" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bitnoobwa.simessentials.AllUssd" />
+        </activity>
     </application>
 
 </manifest>

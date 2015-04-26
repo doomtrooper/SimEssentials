@@ -16,12 +16,18 @@
 
     <string name="na">N/A</string>
     <string name="nosim_info">Oops!!! Some problem while reading SIM Card.</string>
+    <string name="error">Oops!!! Seems like something went Wrong.</string>
     <string name="errorXMLparsing">Oops!!! Seems like something went Wrong.</string>
-    <string name="e1">Error 1</string>
-    <string name="e2">Error 3</string>
-    <string name="e3">Error 3</string>
-    <string name="e4">Error 4</string>
 
     <string name="title_activity_all_ussd">AllUssd</string>
+    <string name="title_activity_operator_details">OperatorDetails</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="op_details">Operator Details</string>
+    <string name="op_name">Operator Name</string>
+    <string name="op_bal">Bal. USSD</string>
+    <string name="op_own">Own No. USSD</string>
+    <string name="op_callOp">Operator USSD</string>
 
 </resources>

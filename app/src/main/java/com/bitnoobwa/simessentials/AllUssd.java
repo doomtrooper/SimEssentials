@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,13 +31,14 @@ public class AllUssd extends ActionBarActivity {
     private ArrayList<Operator> getOperatorList(){
         return operatorList;
     }
+    //private final String countryCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_list);
         Intent intent=getIntent();
-        String countryCode=intent.getStringExtra("countryCode");
-        Log.v("countryCode",countryCode);
+        final String countryCode=intent.getStringExtra("countryCode");
+        //Log.v("countryCode",countryCode);
         XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
         UssdXmlParser xmlParser=new UssdXmlParser(countryCode,myXml);
         try{
@@ -44,27 +47,32 @@ public class AllUssd extends ActionBarActivity {
             populateOperatorsListView();
         }catch (XmlPullParserException e){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,"1:"+e.getMessage());
+            setErrorText(R.id.error_msg,R.string.error);
         }catch (IOException e2){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,"2:"+e2.getMessage());
+            setErrorText(R.id.error_msg,R.string.error);
         }catch (NullPointerException e3){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,"3:"+e3.getMessage());
+            setErrorText(R.id.error_msg,R.string.error);
         }catch (Exception e4){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,"4:"+e4.getMessage());
+            setErrorText(R.id.error_msg,R.string.error);
         }
     }
     private void populateOperatorsListView(){
-        Log.v("OperatorsListView","Inside populateOperatorsListView()");
         // Create the adapter to convert the array to views
        OperatorDetailsAdapter adapter = new OperatorDetailsAdapter(this,R.layout.activity_all_ussd,getOperatorList());
         // Attach the adapter to a ListView
-        //ListView listView = (ListView) findViewById(R.id.operator);
-        //Log.v("view",String.valueOf(R.id.listview));
         final ListView listView = (ListView) findViewById(R.id.operator);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final Operator operator = (Operator) parent.getItemAtPosition(position);
+                viewOperatorDetails(view,operator);
+            }
+        });
     }
     private void setErrorText(int textViewId,int textToSet){
         TextView rowView = (TextView)findViewById(textViewId);
@@ -73,6 +81,13 @@ public class AllUssd extends ActionBarActivity {
     private void setErrorText(int textViewId,String errText){
         TextView rowView = (TextView)findViewById(textViewId);
         rowView.setText(errText);
+    }
+    public void viewOperatorDetails(View view,Operator operator){
+        Intent intent=new Intent(this,OperatorDetails.class);
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("Operator",operator);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

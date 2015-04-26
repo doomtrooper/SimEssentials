@@ -62,7 +62,7 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
         TextView opName=(TextView) convertView.findViewById(R.id.op_name);
         TextView opBal=(TextView) convertView.findViewById(R.id.op_bal_ussd);
         // Populate the data into the template view using the data object
-        opName.setText(operator.getOperatorName());
+        opName.setText(operator.getOperatorName().toUpperCase());
         opBal.setText(operator.getBalanceUSSD());
         // Return the completed view to render on screen
         return convertView;
