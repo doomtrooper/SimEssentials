@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
     private int resourceId;
-    private List<Operator> operatorList;
+    /*private List<Operator> operatorList;
 
     public List<Operator> getOperatorList() {
         return operatorList;
@@ -25,7 +25,7 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
 
     public void setOperatorList(List<Operator> operatorList) {
         this.operatorList = operatorList;
-    }
+    }*/
 
     private void setResourceId(int textViewResourceId){
         this.resourceId=textViewResourceId;
@@ -35,14 +35,14 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
         super(context, textViewResourceId,operatorList);
         Log.v("Adapter","Inside constructer of Custom Adapter");
         setResourceId(textViewResourceId);
-        setOperatorList(operatorList);
+        //setOperatorList(operatorList);
     }
 
-    @Override
+   /* @Override
     public int getCount() {
         Log.v("OperatorCount",String.valueOf(getOperatorList().size()));
         return getOperatorList().size();
-    }
+    }*/
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){

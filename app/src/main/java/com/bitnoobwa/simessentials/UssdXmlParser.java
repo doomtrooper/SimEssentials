@@ -43,7 +43,7 @@ public class UssdXmlParser {
     public Operator getOperator() throws XmlPullParserException,IOException{
         return findOperator(parse());
     }
-    public List<Operator> parse() throws XmlPullParserException, IOException {
+    public ArrayList<Operator> parse() throws XmlPullParserException, IOException {
         try{
             myXml.next();
             myXml.next();
@@ -56,8 +56,8 @@ public class UssdXmlParser {
         return null;
     }
 
-    private List<Operator> readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
-        List<Operator> operatorList=new ArrayList<>();
+    private ArrayList<Operator> readFeed(XmlResourceParser parser) throws XmlPullParserException, IOException{
+        ArrayList<Operator> operatorList=new ArrayList<>();
         parser.require(XmlPullParser.START_TAG,ns,"serviceproviders");
         //Log.d("entry-method","parser enters-reedFeed()");
         while (parser.next()!=XmlPullParser.END_TAG){
@@ -163,7 +163,7 @@ public class UssdXmlParser {
         return ownNoUSSD.toLowerCase();
     }
 
-    private Operator findOperator(List<Operator> operatorArrayList){
+    private Operator findOperator(ArrayList<Operator> operatorArrayList){
         Log.v("entry-findOperator","Entry to findOperator!!!");
         Operator operator=null;
         for (Operator itr:operatorArrayList) {

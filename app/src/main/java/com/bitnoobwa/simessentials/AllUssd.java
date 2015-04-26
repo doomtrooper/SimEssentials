@@ -16,6 +16,7 @@ import com.bitnoobwa.operators.Operator;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,37 +38,53 @@ public class AllUssd extends ActionBarActivity {
         Log.v("countryCode",countryCode);
         XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
         UssdXmlParser xmlParser=new UssdXmlParser(countryCode,myXml);
-        List<Operator> tempOperatorList;
         try{
-            tempOperatorList=xmlParser.parse();
-            Collections.sort(tempOperatorList);
-            setOperatoList(tempOperatorList);
+            //Collections.sort(tempOperatorList);
+            setOperatoList(xmlParser.parse());
             Log.v("AllUSSD","AllUssd Activity");
-            /*if(tempOperatorList.isEmpty())
-                Log.v("List","AllUssd Operator is empty List");*/
-            /*for(Operator itr:operatorList)
-                Log.v("operatorList",itr.toString());*/
+            if(operatorList.isEmpty())
+                Log.v("List","AllUssd Operator is empty List");
+            for(Operator itr:operatorList)
+                Log.v("operatorWa",itr.getOperatorName());
             populateOperatorsListView();
         }catch (XmlPullParserException e){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,R.string.e1);
+            setErrorText(R.id.error_msg,"1:"+e.getMessage());
         }catch (IOException e2){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,R.string.e2);
+            setErrorText(R.id.error_msg,"2:"+e2.getMessage());
         }catch (NullPointerException e3){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,e3.getMessage());
+            setErrorText(R.id.error_msg,"3:"+e3.getMessage());
         }catch (Exception e4){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
-            setErrorText(R.id.error_msg,R.string.e4);
+            setErrorText(R.id.error_msg,"4:"+e4.getMessage());
         }
+        /*super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_listviewexampleactivity);
+
+        final ListView listview = (ListView) findViewById(R.id.listview);
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+                "Android", "iPhone", "WindowsMobile" };
+
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);*/
     }
     private void populateOperatorsListView(){
         Log.v("OperatorsListView","Inside populateOperatorsListView()");
         // Create the adapter to convert the array to views
        OperatorDetailsAdapter adapter = new OperatorDetailsAdapter(this,R.layout.activity_all_ussd,getOperatorList());
         // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.operator);
+        //ListView listView = (ListView) findViewById(R.id.operator);
+        final ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
     }
     private void setErrorText(int textViewId,int textToSet){
