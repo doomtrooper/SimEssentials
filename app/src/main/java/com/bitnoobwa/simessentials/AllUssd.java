@@ -22,30 +22,25 @@ import java.util.List;
 
 
 public class AllUssd extends ActionBarActivity {
-    private List<Operator> operatorList;
-    private void setOperatoList(List<Operator> list){
+    private ArrayList<Operator> operatorList;
+    private void setOperatoList(ArrayList<Operator> list){
         this.operatorList=list;
     }
-    private List<Operator> getOperatorList(){
+    private ArrayList<Operator> getOperatorList(){
         return operatorList;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_ussd);
+        setContentView(R.layout.activity_custom_list);
         Intent intent=getIntent();
         String countryCode=intent.getStringExtra("countryCode");
         Log.v("countryCode",countryCode);
         XmlResourceParser myXml=getApplicationContext().getResources().getXml(R.xml.ussd);
         UssdXmlParser xmlParser=new UssdXmlParser(countryCode,myXml);
         try{
-            //Collections.sort(tempOperatorList);
             setOperatoList(xmlParser.parse());
-            Log.v("AllUSSD","AllUssd Activity");
-            if(operatorList.isEmpty())
-                Log.v("List","AllUssd Operator is empty List");
-            for(Operator itr:operatorList)
-                Log.v("operatorWa",itr.getOperatorName());
+            Collections.sort(getOperatorList());
             populateOperatorsListView();
         }catch (XmlPullParserException e){
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
@@ -60,23 +55,6 @@ public class AllUssd extends ActionBarActivity {
             setContentView(R.layout.activity_main_activity_sim_essentials_error);
             setErrorText(R.id.error_msg,"4:"+e4.getMessage());
         }
-        /*super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listviewexampleactivity);
-
-        final ListView listview = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);*/
     }
     private void populateOperatorsListView(){
         Log.v("OperatorsListView","Inside populateOperatorsListView()");
@@ -84,7 +62,8 @@ public class AllUssd extends ActionBarActivity {
        OperatorDetailsAdapter adapter = new OperatorDetailsAdapter(this,R.layout.activity_all_ussd,getOperatorList());
         // Attach the adapter to a ListView
         //ListView listView = (ListView) findViewById(R.id.operator);
-        final ListView listView = (ListView) findViewById(R.id.listview);
+        //Log.v("view",String.valueOf(R.id.listview));
+        final ListView listView = (ListView) findViewById(R.id.operator);
         listView.setAdapter(adapter);
     }
     private void setErrorText(int textViewId,int textToSet){
@@ -107,12 +86,12 @@ public class AllUssd extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+       /* int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 }

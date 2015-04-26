@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bitnoobwa.operators.Operator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,13 +28,16 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
     public void setOperatorList(List<Operator> operatorList) {
         this.operatorList = operatorList;
     }*/
-
+    private final ArrayList<Operator> operatorArrayList;
+    private final Context context;
     private void setResourceId(int textViewResourceId){
         this.resourceId=textViewResourceId;
     }
     public OperatorDetailsAdapter(Context context, int textViewResourceId,
-                                  List<Operator> operatorList) {
+                                  ArrayList<Operator> operatorList) {
         super(context, textViewResourceId,operatorList);
+        this.context=context;
+        this.operatorArrayList=operatorList;
         Log.v("Adapter","Inside constructer of Custom Adapter");
         setResourceId(textViewResourceId);
         //setOperatorList(operatorList);
@@ -47,9 +52,9 @@ public class OperatorDetailsAdapter extends ArrayAdapter<Operator>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         // Get the data item for this position
-        Log.d("position",String.valueOf(position));
+        //Log.d("position",String.valueOf(position));
         Operator operator=getItem(position);
-        Log.v("OperatorAdapter",operator.toString());
+        //Log.v("OperatorAdapter",operator.getOperatorName());
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_all_ussd, parent, false);
         }
